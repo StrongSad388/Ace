@@ -26,12 +26,12 @@ document.body.appendChild(app.view);
 let cat, explorer;
 
 // put an cat at the same location as the explorer
-PIXI.Assets.load("images/explorer.png").then((texture) => {
-  app.stage.addChild(explorer = PIXI.Sprite.from(texture));
+PIXI.Assets.load("images/cat.png").then((texture) => {
+  app.stage.addChild(cat = PIXI.Sprite.from(texture));
   
-    PIXI.Assets.load("images/cat.png").then((texture) => {
+    PIXI.Assets.load("images/explorer.png").then((texture) => {
       app.stage.removeChild(cat);
-      app.stage.addChild(cat = PIXI.Sprite.from(texture));
+      app.stage.addChild(explorer = PIXI.Sprite.from(texture));
     });
 });
 
