@@ -23,13 +23,14 @@ const app = new PIXI.Application({
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
 
-//load an image and run the `setup` function when it's done
-
-PIXI.Assets.load(["images/cat.png", "images/explorer.png"]).then(setup);
-function setup(texture)
-{
+// put an cat at the same location as the explorer
+PIXI.Assets.load("images/cat.png").then((texture) => {
+    app.stage.addChild(PIXI.Sprite.from(texture)); 
+});
+// put an explorer at the same location as the cat
+PIXI.Assets.load("images/explorer.png").then((texture) => {
   app.stage.addChild(PIXI.Sprite.from(texture)); 
-};
+});
 
     </script>
 </body>
