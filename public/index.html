@@ -27,12 +27,17 @@ let cat, explorer;
 
 // put an cat at the same location as the explorer
 PIXI.Assets.load("images/cat.png").then((texture) => {
-  app.stage.addChild(cat = PIXI.Sprite.from(texture));
+  cat = PIXI.Sprite.from(texture);
+  cat.position.set(48,48);
+  cat.width = 80;
+  cat.height = 120;
+  cat.scale.x = 0.75;
+  cat.scale.y = 1.50;
   
-    PIXI.Assets.load("images/explorer.png").then((texture) => {
-      app.stage.removeChild(cat);
-      app.stage.addChild(explorer = PIXI.Sprite.from(texture));
-    });
+  cat.anchor.x = 0.5;
+  cat.anchor.y = 0.5;
+  cat.rotation = 3.5;
+  app.stage.addChild(cat);
 });
 
     </script>
