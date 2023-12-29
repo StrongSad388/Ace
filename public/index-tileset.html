@@ -24,8 +24,9 @@ const app = new PIXI.Application({
 document.body.appendChild(app.view);
 
 // put an cat at the same location as the explorer
-PIXI.Assets.load("images/treasureHunter.json").then((texture) => {
-  
+PIXI.Assets.load("images/tileset.png").then((texture) => {
+  let rect = new PIXI.Rectangle(192, 128, 64, 64);
+  texture.frame = rect;
   const rocket = new PIXI.Sprite(texture);
   rocket.position.set(32,32);
   app.stage.addChild(rocket);

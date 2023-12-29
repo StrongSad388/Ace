@@ -23,12 +23,21 @@ const app = new PIXI.Application({
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
 
+let cat, explorer;
+
 // put an cat at the same location as the explorer
-PIXI.Assets.load("images/treasureHunter.json").then((texture) => {
+PIXI.Assets.load("images/cat.png").then((texture) => {
+  cat = PIXI.Sprite.from(texture);
+  cat.position.set(48,48);
+  cat.width = 80;
+  cat.height = 120;
+  cat.scale.x = 0.75;
+  cat.scale.y = 1.50;
   
-  const rocket = new PIXI.Sprite(texture);
-  rocket.position.set(32,32);
-  app.stage.addChild(rocket);
+  cat.anchor.x = 0.5;
+  cat.anchor.y = 0.5;
+  cat.rotation = 3.5;
+  app.stage.addChild(cat);
 });
 
     </script>
