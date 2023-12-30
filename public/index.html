@@ -12,8 +12,8 @@
     <script type="text/javascript">
 //Create a Pixi Application
 const app = new PIXI.Application({ 
-    width: 256, 
-    height: 256,                       
+    width: 512, 
+    height: 512,                       
     antialias: true, 
     transparent: false, 
     resolution: 1
@@ -23,12 +23,38 @@ const app = new PIXI.Application({
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
 
+let dungeon, explorer, treasure, id;
+
 // put an cat at the same location as the explorer
-PIXI.Assets.load("images/treasureHunter.json").then((texture) => {
-  
-  const rocket = new PIXI.Sprite(texture);
-  rocket.position.set(32,32);
-  app.stage.addChild(rocket);
+PIXI.Assets.load("images/treasureHunter.json").then((sheet) => {
+  dungeon = new PIXI.Sprite(sheet.textures["dungeon.png"]);
+  explorer = new PIXI.Sprite(sheet.textures["explorer.png"]);
+  treasure = new PIXI.Sprite(sheet.textures["treasure.png"]);
+  door = new PIXI.Sprite(sheet.textures["door.png"]);
+  app.stage.addChild(dungeon);
+  app.stage.addChild(explorer);
+  app.stage.addChild(treasure);
+  explorer.x = 68;
+  explorer.y = app.stage.height / 2 - explorer.height / 2;
+  treasure.x = app.stage.width - treasure.width - 48;
+  treasure.y = app.stage.height / 2 - treasure.height / 2;
+
+  const numberOfBlobs = 6,
+  spacing = 48,
+  xOffset = 150;
+
+  for (let i = 0; i < numberOfBlobs; i++) {
+    const blob = new PIXI.Sprite(sheet.textures["blob.png"]);
+    const x = spacing * i + xOffset;
+    const y = randomInt(0, app.stage.height - blob.height);
+    blob.x = x;
+    blob.y = y;
+    app.stage.addChild(blob);
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 });
 
     </script>
