@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>* {padding: 0; margin: 0}</style>
+    <!--<script src="pixi.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
+    <script type="text/javascript">
+//Create a Pixi Application
+const app = new PIXI.Application({ 
+    width: 512, 
+    height: 512,                       
+    antialias: true, 
+    transparent: false, 
+    resolution: 1
+  }
+);
+
+//Add the canvas that Pixi automatically created for you to the HTML document
+document.body.appendChild(app.view);
+
+let cat;
+
+// put an cat at the same location as the explorer
+PIXI.Assets.load("images/cat.png").then((texture) => {
+  cat = new PIXI.Sprite(texture);
+  app.stage.addChild(cat);
+  app.ticker.add((delta) => gameLoop(delta));
+});
+
+function gameLoop(delta) {
+  if (cat.x > 512) {
+    cat.x = 0;
+    cat.y += 64;
+  }
+  if (cat.y > 512) {
+    cat.y = 0;
+  }
+  cat.x += 1 + delta;
+}
+
+    </script>
+</body>
+</html>
