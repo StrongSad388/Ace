@@ -35,6 +35,10 @@ PIXI.Assets.load("images/treasureHunter.json").then((sheet) => {
   dungeon = new PIXI.Sprite(sheet.textures["dungeon.png"]);
   gameScene.addChild(dungeon);
 
+  door = new PIXI.Sprite(sheet.textures["door.png"]);
+  door.position(32, 0);
+  gameScene.addChild(door);
+
   gameOverScene = new Container();
   app.stage.addChild(gameOverScene);
   gameOverScene.visible = false;
