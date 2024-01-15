@@ -21,6 +21,11 @@ const app = new PIXI.Application({
 );
 
 let Container = PIXI.Container;
+let Sprite = PIXI.Sprite;
+let Graphics = PIXI.Graphics;
+let TextStyle = PIXI.TextStyle;
+let Text = PIXI.Text;
+
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
 
@@ -30,21 +35,127 @@ let state, explorer, treasure, blobs, chimes, exit, player, dungeon,
 
 // put an cat at the same location as the explorer
 PIXI.Assets.load("images/treasureHunter.json").then((sheet) => {
+  //Create the `gameScene` group
+
   gameScene = new Container();
   app.stage.addChild(gameScene);
-  dungeon = new PIXI.Sprite(sheet.textures["dungeon.png"]);
+  dungeon = new Sprite(sheet.textures["dungeon.png"]);
   gameScene.addChild(dungeon);
 
-  door = new PIXI.Sprite(sheet.textures["door.png"]);
-  door.position(32, 0);
+  //Create the `door` sprite
+  door = new Sprite(sheet.textures["door.png"]);
+  door.position.set(32, 0);
   gameScene.addChild(door);
 
+  //Create the `explorer` sprite
+  explorer = new Sprite(sheet.textures["explorer.png"]);
+  explorer.x = 68;
+  explorer.y = gameScene.height / 2 - explorer.height / 2;
+  explorer.vx = 0;
+  explorer.vy = 0;
+  gameScene.addChild(explorer);
+
+  //Create the `treasure` sprite
+  treasure = new Sprite(sheet.textures["treasure.png"]);
+  treasure.x = gameScene.width - treasure.width - 48;
+  treasure.y = gameScene.height / 2 - treasure.height / 2;
+  gameScene.addChild(treasure);
+
+  //Create a `gameOverScene` group
   gameOverScene = new Container();
   app.stage.addChild(gameOverScene);
   gameOverScene.visible = false;
 
-})
+  //Make the enemies
+  let numberOfBlobs = 6,
+    spacing = 48,
+    xOffset = 150,
+    speed = 2,
+    direction = 1;
 
+  //An array to store all the blob monsters
+  blobs = [];
+
+  //Make as many blobs as there are `numberOfBlobs`
+  for (let i = 0; i < numberOfBlobs; i++) {
+
+    //Make a blob
+    const blob = new Sprite(sheet.textures["blob.png"]);
+
+    //Space each blob horizontally according to the `spacing` value.
+    //`xOffset` determines the point from the left of the screen
+    //at which the first blob should be added
+    const x = spacing * i + xOffset;
+
+    //Give the blob a random `y` position
+    const y = randomInt(0, app.stage.height - blob.height);
+
+    //Set the blob's position
+    blob.x = x;
+    blob.y = y;
+
+    //Set the blob's vertical velocity. `direction` will be either `1` or
+    //`-1`. `1` means the enemy will move down and `-1` means the blob will
+    //move up. Multiplying `direction` by `speed` determines the blob's
+    //vertical direction
+    blob.vy = speed * direction;
+
+    //Reverse the direction for the next blob
+    direction *= -1;
+
+    //Push the blob into the `blobs` array
+    blobs.push(blob);
+
+    //Add the blob to the `gameScene`
+    gameScene.addChild(blob);
+  }
+
+  //Create the health bar
+  const healthBar = new Container();
+  healthBar.position.set(app.stage.width - 170, 4);
+  gameScene.addChild(healthBar);
+
+  //Create the black background rectangle
+  const innerBar = new Graphics();
+  innerBar.beginFill(0x000000);
+  innerBar.drawRect(0, 0, 128, 8);
+  innerBar.endFill();
+  healthBar.addChild(innerBar);
+
+  //Create the front red rectangle
+  const outerBar = new Graphics();
+  outerBar.beginFill(0xFF3300);
+  outerBar.drawRect(0, 0, 128, 8);
+  outerBar.endFill();
+  healthBar.addChild(outerBar);
+
+  healthBar.outer = outerBar;
+
+  //Add some text for the game over message
+  const style = new TextStyle({
+    fontFamily: "Futura",
+    fontSize: 64,
+    fill: "white"
+  });
+  message = new Text("The End!", style);
+  message.x = 120;
+  message.y = app.stage.height / 2 - 32;
+  gameOverScene.addChild(message);
+
+
+  //Assign the player's keyboard controllers
+
+  //set the game state to `play`
+  state = play;
+
+  //Start the game loop 
+  app.ticker.add((delta) => gameLoop(delta));
+});
+
+//The `randomInt` helper function
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
     </script>
 </body>
 </html>
