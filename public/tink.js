@@ -32,7 +32,7 @@ var Tink = (function () {
     this.TextureCache = this.PIXI.utils.TextureCache;
 
     //Note: change MovieClip to AnimatedSprite for Pixi v4
-    this.AnimatedSprite = this.PIXI.extras.MovieClip;
+    this.AnimatedSprite = this.PIXI.AnimatedSprite;
     this.Texture = this.PIXI.Texture;
   }
 
