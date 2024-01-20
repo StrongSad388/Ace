@@ -21,19 +21,42 @@
     <script src="/AceShips.js"></script>
     <script type="text/javascript">
         const app = new PIXI.Application({ 
-            width: 512, 
-            height: 512,                       
+            width: 1024, 
+            height: 768,                       
             antialias: true, 
             transparent: false, 
             resolution: 1
           }
         );
-
-        const tink = new Tink(PIXI, app.renderer.view);
-        const bump = new Bump(PIXI);
-        const theShip = new AceShip('Enterprise', 'frigate');
-        console.log(`theShip: ${theShip.name} ${theShip.shipClass}`);
         document.body.appendChild(app.view);
+        let tink, bump;
+        let Enterprise, Nimitz;
+        let state;
+        let gameScene;
+
+        function setup() {
+            const gameScene = new PIXI.Container();
+            app.stage.addChild(gameScene);
+            tink = new Tink(PIXI, app.renderer.view);
+            bump = new Bump(PIXI);
+            Enterprise = new AceShip('e', 'frigate', 7, 3, 'red');
+            Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
+            //console.log(`theShip: ${theFrigate.name} ${theShip.shipClass}`);
+            gameScene.addChild(Enterprise);
+            gameScene.addChild(Nimitz);
+            state = play;
+
+            // Pixi's `ticker` and providing it with a `delta` argument.
+            //app.ticker.add(delta => gameLoop(delta));
+        }
+        function gameLoop() {
+            state();
+        }
+        function play() {
+
+        }
+        setup();
+    
     </script>
 </body>
 </html>
