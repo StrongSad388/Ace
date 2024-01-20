@@ -33,8 +33,12 @@ class AceShip extends PIXI.Container {
        graphic.clear();
        graphic.lineStyle(1, this.color);
        graphic.beginFill(this.color);
-       graphic.drawRect(this.x, this.y, 25, 15);
+       graphic.drawRect(this.x, this.y, 25, 10);
        graphic.endFill();
+   }
+   move(vX = 0, vY = 0) {
+       this.x += this.vx + vX;
+       this.y += this.vy + vY;
    }
 }
 
