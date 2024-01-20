@@ -31,6 +31,8 @@
 
         const tink = new Tink(PIXI, app.renderer.view);
         const bump = new Bump(PIXI);
+        const theShip = new AceShip('Enterprise', 'frigate');
+        console.log(`theShip: ${theShip.name} ${theShip.shipClass}`);
         document.body.appendChild(app.view);
     </script>
 </body>
