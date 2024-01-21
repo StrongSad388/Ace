@@ -30,7 +30,7 @@
         );
         document.body.appendChild(app.view);
         let tink, bump;
-        let Enterprise, Nimitz;
+        let Enterprise, Nimitz, Mine;
         let state;
         let gameScene;
 
@@ -40,10 +40,12 @@
             tink = new Tink(PIXI, app.renderer.view);
             bump = new Bump(PIXI);
             Enterprise = new AceShip('e', 'frigate', 40, 40, 'red');
-            Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
-            //console.log(`theShip: ${theFrigate.name} ${theShip.shipClass}`);
             gameScene.addChild(Enterprise);
+            Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
             gameScene.addChild(Nimitz);
+            Mine = new AceShip('m', 'mine', 77, 128);
+            gameScene.addChild(Mine);
+            //console.log(`theShip: ${theFrigate.name} ${theShip.shipClass}`);
             state = play;
 
             // Pixi's `ticker` and providing it with a `delta` argument.
