@@ -21,19 +21,44 @@ class AceShip extends PIXI.Container {
         graphic.addChild(this.nameGraphic);
     }
     drawFrigate() {
+        // Triangle
+        //const path = [
+        //    this.x - 8, this.y + 10,
+        //    this.x + 8, this.y + 10,
+        //    this.x, this.y
+        //];
+        const path = [
+            this.x, this.y,
+            this.x + 10, this.y,
+            this.x + 14, this.y - 4,
+            this.x + 10, this.y - 8,
+            this.x, this.y - 8,
+            this.x - 4, this.y - 4
+        ]
         const graphic = this.graphic;
         graphic.clear();
         graphic.lineStyle(1, this.color);
         graphic.beginFill(this.color);
-        graphic.drawRect(this.x, this.y, 17, 10);
+        //graphic.drawRect(this.x, this.y, 17, 10);
+        graphic.drawPolygon(path);
+        graphic.position.set(this.x, this.y);
         graphic.endFill();
    }
    drawBattleShip() {
+        const path = [
+            this.x, this.y,
+            this.x + 25, this.y,
+            this.x + 31, this.y - 5,
+            this.x + 25, this.y - 10,
+            this.x, this.y - 10,
+            this.x - 6, this.y - 5
+        ]
        const graphic = this.graphic;
        graphic.clear();
        graphic.lineStyle(1, this.color);
        graphic.beginFill(this.color);
-       graphic.drawRect(this.x, this.y, 25, 10);
+       graphic.drawPolygon(path);
+       //graphic.drawRect(this.x, this.y, 25, 10);
        graphic.endFill();
    }
    move(vX = 0, vY = 0) {
