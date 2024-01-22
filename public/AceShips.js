@@ -25,6 +25,7 @@ class AceShip extends PIXI.Container {
     move(vX = 0, vY = 0) {
         this.x += this.vx + vX;
         this.y += this.vy + vY;
+        console.debug(this.name + ' moved to ' + this.x + ', ' + this.y)
     }
     drawFrigate() {
         const path = [
@@ -76,11 +77,20 @@ class AceShip extends PIXI.Container {
         graphic.position.set(this.x, this.y);
         graphic.endFill();
     }
+    fire() {
+        // if (this.shipClass === 'frigate') {
+        //     this.fireFrigate();
+        // } else if (this.shipClass === 'battleship') {
+        //     this.fireBattleShip();
+        // }
+        console.debug(this.name + ' fired!');
+    }
 }
 
 class AceManager {
     constructor() {
         this.ships = [];
+        this.mines = [];
     }
     addShip(ship) {
         this.ships.push(ship);
@@ -88,6 +98,23 @@ class AceManager {
     moveShips() {
         this.ships.forEach((ship) => {
             ship.move();
-        })
+        });
+    }
+    addMine(mine) {
+        this.mines.push(mine);
+    }
+    fireMines() {
+        this.mines.forEach((mine) => {
+            mine.fire();
+        });
+    }
+    fireShips() {
+        this.ships.forEach((ship) => {
+            ship.fire();
+        });
+    }
+    update() {
+        this.fireShips();
+        this.moveShips();
     }
 }

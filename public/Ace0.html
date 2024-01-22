@@ -33,29 +33,35 @@
         let Enterprise, Nimitz, Mine;
         let state;
         let gameScene;
+        let aceManager;
 
         function setup() {
-            const gameScene = new PIXI.Container();
+            gameScene = new PIXI.Container();
             app.stage.addChild(gameScene);
             tink = new Tink(PIXI, app.renderer.view);
             bump = new Bump(PIXI);
+            aceManager = new AceManager();
             Enterprise = new AceShip('e', 'frigate', 40, 40, 'red');
+            aceManager.addShip(Enterprise);
             gameScene.addChild(Enterprise);
             Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
+            aceManager.addShip(Nimitz);
             gameScene.addChild(Nimitz);
             Mine = new AceShip('m', 'mine', 77, 128);
+            aceManager.addMine(Mine);
             gameScene.addChild(Mine);
-            //console.log(`theShip: ${theFrigate.name} ${theShip.shipClass}`);
+
             state = play;
 
             // Pixi's `ticker` and providing it with a `delta` argument.
-            //app.ticker.add(delta => gameLoop(delta));
+            app.ticker.add(delta => gameLoop(delta));
         }
         function gameLoop() {
             state();
         }
         function play() {
-
+            aceManager.update();
+            tink.update();
         }
         setup();
     
