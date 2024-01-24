@@ -6,6 +6,8 @@ class AceShip extends PIXI.Container {
         this.position.set(x, y);
         this.vx = 0;
         this.vy = 0;
+        this.pivot.x = this.width / 2;
+        this.pivot.y = this.height / 2;
         this.color = color;
         this.visible = visible;
         const graphic = new PIXI.Graphics();
@@ -27,6 +29,16 @@ class AceShip extends PIXI.Container {
         this.y += this.vy + vY;
         console.debug(this.name + ' moved to ' + this.x + ', ' + this.y)
     }
+    drawShip(path) {
+        const graphic = this.graphic;
+        graphic.clear();
+        graphic.lineStyle(1, this.color);
+        graphic.beginFill(this.color);
+        //graphic.drawRect(this.x, this.y, 17, 10);
+        graphic.drawPolygon(path);
+        graphic.position.set(this.x, this.y);
+        graphic.endFill();
+    }
     drawFrigate() {
         const path = [
             this.x, this.y,
@@ -36,14 +48,7 @@ class AceShip extends PIXI.Container {
             this.x, this.y - 8,
             this.x - 4, this.y - 4
         ]
-        const graphic = this.graphic;
-        graphic.clear();
-        graphic.lineStyle(1, this.color);
-        graphic.beginFill(this.color);
-        //graphic.drawRect(this.x, this.y, 17, 10);
-        graphic.drawPolygon(path);
-        graphic.position.set(this.x, this.y);
-        graphic.endFill();
+        this.drawShip(path);
     }
     drawBattleShip() {
         const path = [
@@ -54,13 +59,7 @@ class AceShip extends PIXI.Container {
             this.x, this.y - 10,
             this.x - 6, this.y - 5
         ]
-        const graphic = this.graphic;
-        graphic.clear();
-        graphic.lineStyle(1, this.color);
-        graphic.beginFill(this.color);
-        graphic.drawPolygon(path);
-        graphic.position.set(this.x, this.y);
-        graphic.endFill();
+        this.drawShip(path);
     }
 
     drawMine() {
@@ -69,13 +68,7 @@ class AceShip extends PIXI.Container {
             this.x + 8, this.y + 10,
             this.x, this.y
         ];
-        const graphic = this.graphic;
-        graphic.clear();
-        graphic.lineStyle(1, this.color);
-        graphic.beginFill(this.color);
-        graphic.drawPolygon(path);
-        graphic.position.set(this.x, this.y);
-        graphic.endFill();
+        this.drawShip(path);
     }
     fire() {
         // if (this.shipClass === 'frigate') {
