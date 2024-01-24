@@ -34,11 +34,13 @@
         let state;
         let gameScene;
         let aceManager;
+        let pointer;
 
         function setup() {
             gameScene = new PIXI.Container();
             app.stage.addChild(gameScene);
             tink = new Tink(PIXI, app.renderer.view);
+            pointer = tink.makePointer();
             bump = new Bump(PIXI);
             aceManager = new AceManager();
             Enterprise = new AceShip('e', 'frigate', 40, 40, 'red');
