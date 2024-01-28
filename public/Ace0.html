@@ -41,12 +41,13 @@
             app.stage.addChild(gameScene);
 
             aceManager = new AceManager();
-            Enterprise = new AceShip('e', 'frigate', 40, 40, 'red');
-            aceManager.addShip(Enterprise);
-            gameScene.addChild(Enterprise);
+            
             Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
             aceManager.addShip(Nimitz);
             gameScene.addChild(Nimitz);
+            Enterprise = new AceShip('e', 'frigate', 40, 40, 'red');
+            aceManager.addShip(Enterprise);
+            gameScene.addChild(Enterprise);
             Mine = new AceShip('m', 'mine', 77, 128);
             aceManager.addMine(Mine);
             gameScene.addChild(Mine);
@@ -55,9 +56,21 @@
             pointer = tink.makePointer();
             bump = new Bump(PIXI);
             
-            //Nimitz.rotation = 0.5;
-            //Enterprise.rotation = 0.5;
-
+            {
+                //pointer.press = () => console.log("The pointer was pressed at " + pointer.x + " " + pointer.y);
+                //pointer.release = () => console.log("The pointer was released at " + pointer.x + " " + pointer.y);
+                //pointer.tap = () => console.log("The pointer was tapped at " + pointer.x + " " + pointer.y);
+                //pointer.visible = true;
+                //pointer.cursor = "pointer";
+            }
+            {
+                // Drag point is upper left
+                tink.makeDraggable(Enterprise, Nimitz, Mine);
+            }
+            {
+                //Nimitz.rotation = 0.5;
+                //Enterprise.rotation = 0.5;
+            }
             state = play;
 
             // Pixi's `ticker` and providing it with a `delta` argument.
@@ -67,7 +80,15 @@
             state();
         }
         function play() {
+            
             aceManager.update();
+            if (pointer.hitTestSprite(Nimitz)) {
+                Nimitz.alpha = 0.5;
+                console.log("Nimitz hit");
+            } else {
+                Nimitz.alpha = 1.0;
+                console.log("Nimitz miss");
+            }
             tink.update();
         }
         setup();

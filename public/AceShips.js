@@ -3,13 +3,16 @@ class AceShip extends PIXI.Container {
         super();
         this.name = name;
         this.shipClass = shipClass;
-        this.position.set(x, y);
+        this.x = x;
+        this.y = y;
+        //this.position.set(x, y);
         this.vx = 0;
         this.vy = 0;
         this.pivot.x = this.width / 2;
         this.pivot.y = this.height / 2;
         this.color = color;
         this.visible = visible;
+        this.circular = true;
         const graphic = new PIXI.Graphics();
 
         this.graphic = graphic;
@@ -35,8 +38,8 @@ class AceShip extends PIXI.Container {
         graphic.lineStyle(1, this.color);
         graphic.beginFill(this.color);
         //graphic.drawRect(this.x, this.y, 17, 10);
-        graphic.drawPolygon(path);
         graphic.position.set(this.x, this.y);
+        graphic.drawPolygon(path);
         graphic.endFill();
     }
     drawFrigate() {
