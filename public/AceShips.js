@@ -30,7 +30,7 @@ class AceShip extends PIXI.Container {
     move(vX = 0, vY = 0) {
         this.x += this.vx + vX;
         this.y += this.vy + vY;
-        console.debug(this.name + ' moved to ' + this.x + ', ' + this.y)
+        //console.debug(this.name + ' moved to ' + this.x + ', ' + this.y)
     }
     drawShip(path) {
         const graphic = this.graphic;
@@ -79,7 +79,7 @@ class AceShip extends PIXI.Container {
         // } else if (this.shipClass === 'battleship') {
         //     this.fireBattleShip();
         // }
-        console.debug(this.name + ' fired!');
+        //console.debug(this.name + ' fired!');
     }
 }
 
