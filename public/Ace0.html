@@ -88,9 +88,8 @@
         function play() {
             
             aceManager.update();
-            if (pointer.hitTestSprite(Nimitz)) {
+            if (pointer.hitTestSprite(Nimitz) && pointer.isDown) {
                 Nimitz.alpha = 0.5;
-                console.log("Nimitz hit");
             } else {
                 Nimitz.alpha = 1.0;
             }
