@@ -8,8 +8,8 @@ class AceShip extends PIXI.Container {
         //this.position.set(x, y);
         this.vx = 0;
         this.vy = 0;
-        this.pivot.x = this.width / 2;
-        this.pivot.y = this.height / 2;
+//        this.pivot.x = this.width / 2;
+//        this.pivot.y = this.height / 2;
         this.color = color;
         this.visible = visible;
         this.circular = true;
@@ -41,6 +41,9 @@ class AceShip extends PIXI.Container {
         graphic.position.set(this.x, this.y);
         graphic.drawPolygon(path);
         graphic.endFill();
+        graphic.pivot.x = graphic.width / 2;
+        graphic.pivot.y = graphic.height / 2;
+        console.log('drawShip', this.x, this.y, graphic.width, graphic.height);
     }
     drawFrigate() {
         const path = [
