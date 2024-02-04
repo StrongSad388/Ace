@@ -40,7 +40,11 @@
             gameScene = new PIXI.Container();
             app.stage.addChild(gameScene);
 
-            aceManager = new AceManager();
+            tink = new Tink(PIXI, app.renderer.view);
+            pointer = tink.makePointer();
+            bump = new Bump(PIXI);
+
+            aceManager = new AceManager(pointer);
             
             Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
             aceManager.addShip(Nimitz);
@@ -52,10 +56,6 @@
             aceManager.addMine(Mine);
             gameScene.addChild(Mine);
 
-            tink = new Tink(PIXI, app.renderer.view);
-            pointer = tink.makePointer();
-            bump = new Bump(PIXI);
-            
             {
                 //pointer.press = () => console.log("The pointer was pressed at " + pointer.x + " " + pointer.y);
                 //pointer.release = () => console.log("The pointer was released at " + pointer.x + " " + pointer.y);
@@ -86,13 +86,7 @@
             state();
         }
         function play() {
-            
             aceManager.update();
-            if (pointer.hitTestSprite(Nimitz) && pointer.isDown) {
-                Nimitz.alpha = 0.5;
-            } else {
-                Nimitz.alpha = 1.0;
-            }
             tink.update();
         }
         setup();

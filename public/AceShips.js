@@ -73,6 +73,18 @@ class AceShip extends PIXI.Container {
         ];
         this.drawShip(path);
     }
+
+    select(pointer) {
+        if (pointer.isDown) {
+            if (pointer.isDown && pointer.hitTestSprite(this)) {
+                this.selected = true;
+                this.alpha = 0.5;
+            } else {
+                this.selected = false;
+                this.alpha = 1.0;
+            }
+        }
+    }
     fire() {
         // if (this.shipClass === 'frigate') {
         //     this.fireFrigate();
@@ -84,7 +96,8 @@ class AceShip extends PIXI.Container {
 }
 
 class AceManager {
-    constructor() {
+    constructor(pointer) {
+        this.pointer = pointer
         this.ships = [];
         this.mines = [];
     }
@@ -109,7 +122,13 @@ class AceManager {
             ship.fire();
         });
     }
+    selectShips() {
+        this.ships.forEach((ship) => {
+            ship.select(this.pointer);
+        });
+    }
     update() {
+        this.selectShips();
         this.fireShips();
         this.moveShips();
     }
