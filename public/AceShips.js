@@ -88,8 +88,8 @@ class AceShip extends PIXI.Container {
         graphic.endFill();
         graphic.pivot.x = graphic.width / 2;
         graphic.pivot.y = graphic.height / 2;
-        this.hitArea = new PIXI.Polygon(path);
-        this.interactive = true;
+        graphic.hitArea = new PIXI.Polygon(path);
+        graphic.interactive = true;
     }
     drawFrigate() {
         const path = [
