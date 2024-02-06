@@ -29,22 +29,17 @@
           }
         );
         document.body.appendChild(app.view);
-        let tink, bump;
+        let bump;
         let Enterprise, Nimitz, Mine;
         let state;
         let gameScene;
         let aceManager;
-        let pointer;
 
         function setup() {
             gameScene = new PIXI.Container();
             app.stage.addChild(gameScene);
 
-            tink = new Tink(PIXI, app.renderer.view);
-            pointer = tink.makePointer();
-            bump = new Bump(PIXI);
-
-            aceManager = new AceManager(pointer);
+            aceManager = new AceManager();
             
             Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
             aceManager.addShip(Nimitz);
@@ -56,27 +51,6 @@
             aceManager.addMine(Mine);
             gameScene.addChild(Mine);
 
-            {
-                //pointer.press = () => console.log("The pointer was pressed at " + pointer.x + " " + pointer.y);
-                //pointer.release = () => console.log("The pointer was released at " + pointer.x + " " + pointer.y);
-                //pointer.tap = () => console.log("The pointer was tapped at " + pointer.x + " " + pointer.y);
-                //pointer.visible = true;
-                //pointer.cursor = "pointer";
-            }
-            {
-                // Drag point is upper left
-                tink.makeDraggable(Enterprise, Nimitz, Mine);
-            }
-            {
-                //Nimitz.rotation = 0.5;
-                //Enterprise.rotation = 0.5;
-            }
-            {
-                // buttons
-            }
-            {
-                // movement
-            }
             state = play;
 
             // Pixi's `ticker` and providing it with a `delta` argument.
@@ -87,7 +61,6 @@
         }
         function play() {
             aceManager.update();
-            tink.update();
         }
         setup();
     
