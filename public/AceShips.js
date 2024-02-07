@@ -1,15 +1,18 @@
 class AceShip extends PIXI.Container {
-    constructor(name, shipClass, x = 0, y = 0, color = 'white', visible = true) {
+    constructor(name, shipClass, x = 0, y = 0, pointer, tink, color = 'white', visible = true) {
         super();
+        this.pointer = pointer;
+        this.tink = tink;
+        this.selected = false;
         this.name = name;
         this.shipClass = shipClass;
-        this.x = x;
-        this.y = y;
-        //this.position.set(x, y);
+        //this.x = x;
+        //this.y = y;
+        this.position.set(x, y);
         this.vx = 0;
         this.vy = 0;
-//        this.pivot.x = this.width / 2;
-//        this.pivot.y = this.height / 2;
+        this.pivot.x = this.width / 2;
+        this.pivot.y = this.height / 2;
         this.color = color;
         this.visible = visible;
         this.circular = true;
@@ -28,49 +31,35 @@ class AceShip extends PIXI.Container {
         graphic.addChild(this.nameGraphic);
         this.configureHandlers();
     }
+    select() {
+        this.selected = !this.selected;
+        if (this.selected) {
+            this.graphic.alpha = 0.5;
+        } else {
+            this.graphic.alpha = 1;
+        }
+    }
     configureHandlers() {
-        this.onclick = (event) => {
-            console.log('clicked', this.name);
+        // this.onclick = (event) => {
+        //     console.log('clicked', this.name);
+        //     this.select();
+        // };
+        // this.onmousenter = (event) => { console.log('mouseenter', this.name); this.pointer.cursor = 'pointer'; };
+        // this.onmouseleave = (event) => { console.log('mouseleave', this.name); this.pointer.cursor = 'default'; };
+        // this.onmouseout = (event) => { console.log('mouseout', this.name); this.pointer.cursor = 'default'; };
+        // this.onmouseover = (event) => { console.log('mouseover', this.name); this.pointer.cursor = 'pointer'; };
+        // this.onmouseup = (event) => { console.log('mouseup', this.name); };
+        this.tink.makeInteractive(this);
+        this.press = (event) => {
+            console.log('pressed', this.name);
+            this.select();
         };
-        this.onglobalmousemove = (event) => {
-            console.log('globalmousemove', this.name);
+        this.release = (event) => {
+            console.log('released', this.name);
         };
-        this.onglobalpointermove = (event) => {
-            console.log('globalpointermove', this.name);
+        this.tap = (event) => {
+            console.log('tapped', this.name);
         };
-        this.onglobaltouchmove = (event) => {
-            console.log('globaltouchmove', this.name);
-        };
-        this.onmousedown = (event) => {
-            console.log('mousedown', this.name);
-        };
-        this.onmousenter = (event) => { console.log('mouseenter', this.name) };
-        this.onmouseleave = (event) => { console.log('mouseleave', this.name) };
-        this.onmousemove = (event) => { console.log('mousemove', this.name) };
-        this.onmouseout = (event) => { console.log('mouseout', this.name) };
-        this.onmouseover = (event) => { console.log('mouseover', this.name) };
-        this.onmouseup = (event) => { console.log('mouseup', this.name) };
-        this.onmouseupoutside = (event) => { console.log('mouseupoutside', this.name) };
-        this.onpointercancel = (event) => { console.log('pointercancel', this.name) };
-        this.onpointerdown = (event) => { console.log('pointerdown', this.name) };
-        this.onpointerenter = (event) => { console.log('pointerenter', this.name) };
-        this.onpointerleave = (event) => { console.log('pointerleave', this.name) };
-        this.onpointermove = (event) => { console.log('pointermove', this.name) };
-        this.onpointerout = (event) => { console.log('pointerout', this.name) };
-        this.onpointerover = (event) => { console.log('pointerover', this.name) };
-        this.onpointertap = (event) => { console.log('pointertap', this.name) };
-        this.onpointerupoutside = (event) => { console.log('pointerupoutside', this.name) };
-        this.onrightclick = (event) => { console.log('rightclick', this.name) };
-        this.onrightdown = (event) => { console.log('rightdown', this.name) };
-        this.onrightup = (event) => { console.log('rightup', this.name) };
-        this.onrightupoutside = (event) => { console.log('rightupoutside', this.name) };
-        this.ontap = (event) => { console.log('tap', this.name) };
-        this.ontouchcancel = (event) => { console.log('touchcancel', this.name) };
-        this.ontouchend = (event) => { console.log('touchend', this.name) };
-        this.ontouchendoutside = (event) => { console.log('touchendoutside', this.name) };
-        this.ontouchmove = (event) => { console.log('touchmove', this.name) };
-        this.ontouchstart = (event) => { console.log('touchstart', this.name) };
-        this.onwheel = (event) => { console.log('wheel', this.name) };
     }
     move(vX = 0, vY = 0) {
         this.x += this.vx + vX;
@@ -89,7 +78,7 @@ class AceShip extends PIXI.Container {
         graphic.pivot.x = graphic.width / 2;
         graphic.pivot.y = graphic.height / 2;
         graphic.hitArea = new PIXI.Polygon(path);
-        graphic.interactive = true;
+        //graphic.interactive = true;
     }
     drawFrigate() {
         const path = [
@@ -125,7 +114,7 @@ class AceShip extends PIXI.Container {
 
 class AceManager {
     constructor(pointer) {
-        this.pointer = pointer
+        this.pointer = pointer;
         this.ships = [];
         this.mines = [];
     }
@@ -148,11 +137,6 @@ class AceManager {
     fireShips() {
         this.ships.forEach((ship) => {
             ship.fire();
-        });
-    }
-    selectShips() {
-        this.ships.forEach((ship) => {
-            ship.select(this.pointer);
         });
     }
     update() {

@@ -14,7 +14,7 @@
     <!-- from https://pixijs.download/v7.3.3/pixi.min.js -->
     <script src="/lib/pixi.min.js"></script>
     <!-- from https://github.com/kittykatattack/bump -->
-    <script src="/lib/bump.js"></script>
+    <!-- script src="/lib/bump.js"></script -->
     <!-- https://github.com/kittykatattack/tink -->
     <script src="/lib/tink.js"></script>
     <!-- Here is where the personality scripts are loaded -->
@@ -34,20 +34,33 @@
         let state;
         let gameScene;
         let aceManager;
+        let tink, pointer;
 
         function setup() {
             gameScene = new PIXI.Container();
             app.stage.addChild(gameScene);
 
-            aceManager = new AceManager();
+            tink = new Tink(PIXI, app.renderer.view);
+            pointer = tink.makePointer();
+            pointer.press = () => {
+                console.log('pointer.press');
+            };
+            pointer.release = () => {
+                console.log('pointer.release');
+            };
+            pointer.tap = () => {
+                console.log('pointer.tap');
+            };
+
+            aceManager = new AceManager(pointer);
             
-            Nimitz = new AceShip('n', 'battleship', 12, 17, 'red');
+            Nimitz = new AceShip('n', 'battleship', 12, 17, pointer, tink, 'red');
             aceManager.addShip(Nimitz);
             gameScene.addChild(Nimitz);
-            Enterprise = new AceShip('e', 'frigate', 40, 40, 'red');
+            Enterprise = new AceShip('e', 'frigate', 40, 40, pointer, tink, 'red');
             aceManager.addShip(Enterprise);
             gameScene.addChild(Enterprise);
-            Mine = new AceShip('m', 'mine', 77, 128);
+            Mine = new AceShip('m', 'mine', 77, 128, pointer, tink);
             aceManager.addMine(Mine);
             gameScene.addChild(Mine);
 
@@ -61,6 +74,7 @@
         }
         function play() {
             aceManager.update();
+            tink.update();
         }
         setup();
     
