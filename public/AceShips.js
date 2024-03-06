@@ -40,26 +40,26 @@ class AceShip extends PIXI.Container {
         }
     }
     configureHandlers() {
-        // this.onclick = (event) => {
-        //     console.log('clicked', this.name);
-        //     this.select();
-        // };
-        // this.onmousenter = (event) => { console.log('mouseenter', this.name); this.pointer.cursor = 'pointer'; };
-        // this.onmouseleave = (event) => { console.log('mouseleave', this.name); this.pointer.cursor = 'default'; };
-        // this.onmouseout = (event) => { console.log('mouseout', this.name); this.pointer.cursor = 'default'; };
-        // this.onmouseover = (event) => { console.log('mouseover', this.name); this.pointer.cursor = 'pointer'; };
-        // this.onmouseup = (event) => { console.log('mouseup', this.name); };
-        this.tink.makeInteractive(this);
-        this.press = (event) => {
-            console.log('pressed', this.name);
+        this.onclick = (event) => {
+            console.log('clicked', this.name);
             this.select();
         };
-        this.release = (event) => {
-            console.log('released', this.name);
-        };
-        this.tap = (event) => {
-            console.log('tapped', this.name);
-        };
+        this.onmousenter = (event) => { console.log('mouseenter', this.name); this.pointer.cursor = 'pointer'; };
+        this.onmouseleave = (event) => { console.log('mouseleave', this.name); this.pointer.cursor = 'default'; };
+        this.onmouseout = (event) => { console.log('mouseout', this.name); this.pointer.cursor = 'default'; };
+        this.onmouseover = (event) => { console.log('mouseover', this.name); this.pointer.cursor = 'pointer'; };
+        this.onmouseup = (event) => { console.log('mouseup', this.name); };
+        // this.tink.makeInteractive(this);
+        // this.press = (event) => {
+        //     console.log('pressed', this.name);
+        //     this.select();
+        // };
+        // this.release = (event) => {
+        //     console.log('released', this.name);
+        // };
+        // this.tap = (event) => {
+        //     console.log('tapped', this.name);
+        // };
     }
     move(vX = 0, vY = 0) {
         this.x += this.vx + vX;
@@ -78,7 +78,7 @@ class AceShip extends PIXI.Container {
         graphic.pivot.x = graphic.width / 2;
         graphic.pivot.y = graphic.height / 2;
         graphic.hitArea = new PIXI.Polygon(path);
-        //graphic.interactive = true;
+        graphic.interactive = true;
     }
     drawFrigate() {
         const path = [
